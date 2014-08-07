@@ -218,10 +218,7 @@ digraph {
 }
 ~~~
 
-
-## Extra
-
-### Direction
+## Direction
 
 그래프의 방향을 바꾸고 싶다: 제일 위에 `rankdir=LR` 을 넣는다.
 ```
