@@ -49,6 +49,36 @@ digraph TestGraph2 {
 }
 ~~~
 
+## Comment
+
+주석은 C 와 같다. // 로 시작하는 Line comment, /* ... */ 로 묶여지는 multiline comment.
+
+```
+digraph {
+    // Line comment
+    A -> B;
+    /*
+    You will not see these two edges.
+    B -> C;
+    C -> D;
+    */
+    B -> E;
+}
+```
+~~~ {.dot}
+digraph {
+    // Line comment
+    A -> B;
+    /*
+    You will not see these two edges.
+    B -> C;
+    C -> D;
+    */
+    B -> E;
+}
+~~~
+
+
 ## Node
 
 엣지 없이 노드만 그릴 수도 있다. 노드에 스타일을 주기 위해서는 엣지 없이 노드 단독으로 정의가 되어야 한다. 스타일은 노드 이름 뒤 [ .. ] 안에 지정할 수 있다. 아래 그래프의 **Boy_1** 을 보자.
