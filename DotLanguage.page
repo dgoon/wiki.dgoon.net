@@ -121,7 +121,6 @@ digraph {
     edge [color=cyan];
     A -> C;
     A -> D;
-    A -> {E, F, G};
 }
 
 
