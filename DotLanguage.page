@@ -1,8 +1,8 @@
 [Dot](http://en.wikipedia.org/wiki/DOT_(graph_description_language)) 은 그래프를 기술하는 언어다. 그래프의 노드와 엣지 정보로부터 비교적 간단하게 그래프 구조를 생성할 수 있고, DotLanguage 로부터 그래프 이미지를 생성해주는 프로그램도 여럿 있어 다양하게 사용된다. 독립적으로 사용되기보다 다른 그래프 관련 프로그램의 컴포넌트로 사용되던가 위키(여기)나 다른 저작 툴의 플러그인으로 자주 쓰인다.
 
-* Dot 튜토리얼: http://www.graphviz.org/pdf/dotguide.pdf
-* Node, Edge 에 사용할 수 있는 속성: http://www.graphviz.org/doc/info/attrs.html
-* 위키피디아 간단한 설명: http://en.wikipedia.org/wiki/DOT_(graph_description_language)
+* Dot 튜토리얼: [http://www.graphviz.org/pdf/dotguide.pdf](http://www.graphviz.org/pdf/dotguide.pdf)
+* Node, Edge 에 사용할 수 있는 속성: [http://www.graphviz.org/doc/info/attrs.html](http://www.graphviz.org/doc/info/attrs.html)
+* 위키피디아 간단한 설명: [http://en.wikipedia.org/wiki/DOT_(graph_description_language)](http://en.wikipedia.org/wiki/DOT_(graph_description_language))
 
 ## Basic syntax
 
@@ -233,4 +233,3 @@ graph {
     A -- B -- C -- D;
 }
 ~~~
-
