@@ -106,7 +106,9 @@ digraph TestGraph3 {
 ```
 graph {
     node [color=yellow];
-    A; B; C; D;
+    A; B;
+    node [color=red];
+    C; D;
 }
 ```
 ~~~ {.dot}
