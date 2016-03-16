@@ -1,0 +1,268 @@
+[Dot](http://en.wikipedia.org/wiki/DOT_(graph_description_language)) 은 그래프를 기술하는 언어다. 그래프의 노드와 엣지 정보로부터 비교적 간단하게 그래프 구조를 생성할 수 있고, DotLanguage 로부터 그래프 이미지를 생성해주는 프로그램도 여럿 있어 다양하게 사용된다. 독립적으로 사용되기보다 다른 그래프 관련 프로그램의 컴포넌트로 사용되던가 위키(여기)나 다른 저작 툴의 플러그인으로 자주 쓰인다.
+
+* Dot 튜토리얼: [http://www.graphviz.org/pdf/dotguide.pdf](http://www.graphviz.org/pdf/dotguide.pdf)
+* Node, Edge 에 사용할 수 있는 속성: [http://www.graphviz.org/doc/info/attrs.html](http://www.graphviz.org/doc/info/attrs.html)
+* 위키피디아 간단한 설명: [http://en.wikipedia.org/wiki/DOT_(graph_description_language)](http://en.wikipedia.org/wiki/DOT_(graph_description_language))
+
+## Basic syntax
+
+문법이 직관적이라 간단한 그래프는 별다른 도구 없이 노트패드 등의 텍스트 에디터에서 바로 그려볼 수 있다. C와 마찬가지로 각 문장의 끝에 세미콜론(;)을 붙이고, 방향 있는 엣지는 ->, 방향이 없는 엣지는 - - 로 나타낸다.
+
+기본 구조는 아래와 같다. 방향성 그래프를 그리는 경우 가장 앞에 나오는 **graph** 를 **digraph** 로 바꾸어 주면 된다.
+
+~~~
+graph GRAPHNAME {
+    NodeA -> NodeB;
+    NodeC -> NodeD;
+    ...
+}
+~~~
+
+예를 들어 두 개의 노드 **A** 와 **B** 가 있고, **A**, **B** 사이에 엣지가 하나 있다면,
+
+```
+graph TestGraph1 {
+    A -- B;
+}
+```
+
+이렇게 나타낸다. 위 코드로 생성된 그래프는 아래와 같다.
+
+~~~ {.dot}
+graph TestGraph1 {
+    A -- B;
+}
+~~~
+
+엣지 여러개를 이어서 경로를 한 줄에 나타낼 수도 있다.
+
+```
+digraph TestGraph2 {
+    A -> B -> C;
+    C -> D -> A;
+}
+```
+
+~~~ {.dot}
+digraph TestGraph2 {
+    A -> B -> C;
+    C -> D -> A;
+}
+~~~
+
+## Comment
+
+주석은 C 와 같다. // 로 시작하는 Line comment, /* ... */ 로 묶여지는 multiline comment.
+
+```
+digraph {
+    // Line comment
+    A -> B;
+    /*
+    You will not see these two edges.
+    B -> C;
+    C -> D;
+    */
+    B -> E;
+}
+```
+~~~ {.dot}
+digraph {
+    // Line comment
+    A -> B;
+    /*
+    You will not see these two edges.
+    B -> C;
+    C -> D;
+    */
+    B -> E;
+}
+~~~
+
+
+## Node
+
+엣지 없이 노드만 그릴 수도 있다. 노드에 스타일을 주기 위해서는 엣지 없이 노드 단독으로 정의가 되어야 한다. 스타일은 노드 이름 뒤 [ .. ] 안에 지정할 수 있다. 아래 그래프의 **Boy_1** 을 보자.
+
+```
+digraph TestGraph3 {
+    Boy_1 [shape=box,style=filled,fillcolor=lightblue];
+    Girl_1;
+    Boy_2 -> Girl_2;
+    Girl_2 [color=red];
+}
+```
+~~~ {.dot}
+digraph TestGraph3 {
+    Boy_1 [shape=box,style=filled,fillcolor=lightblue];
+    Girl_1;
+    Boy_2 -> Girl_2;
+    Girl_2 [color=red];
+}
+~~~
+
+노드 이름에 특별히 **node** 를 사용하면 이후 나오는 모든 노드에 스타일을 넣을 수 있다.
+
+```
+graph {
+    node [color=yellow];
+    A; B;
+    node [color=red];
+    C; D;
+}
+```
+~~~ {.dot}
+graph {
+    node [color=yellow];
+    A; B;
+    node [color=red];
+    C; D;
+}
+~~~
+
+## Edge
+
+엣지도 노드와 비슷하게 스타일을 줄 수 있다. 정확히는 문장의 끝 부분에 노드와 같이 스타일 지정을 하면 된다.
+
+```
+digraph {
+    A [style=filled,fillcolor=green];
+    A -> B [color=red];
+    B -> C [style=dotted,color=gray];
+    B -> D -> E -> F [color=blue];
+}
+```
+
+~~~ {.dot}
+digraph {
+    A [style=filled,fillcolor=green];
+    A -> B [color=red];
+    B -> C [style=dotted,color=gray];
+    B -> D -> E -> F [color=blue];
+}
+~~~
+
+역시 노드처럼 특별한 이름 **edge** 를 사용해 이후 모든 엣지에 대한 스타일을 지정할 수 있다.
+
+```
+digraph {
+    A -> B;
+    edge [color=cyan];
+    A -> C;
+    A -> D;
+}
+```
+~~~ {.dot}
+digraph {
+    A -> B;
+    edge [color=cyan];
+    A -> C;
+    A -> D;
+}
+~~~
+
+## Subgraph
+
+그래프가 여러개의 작은 그래프로 나뉠 수도 있다. 이 때 graph { .. } 구조를 중첩해서 사용할 수 있다. 안쪽에 들어가는 그래프는 graph 대신 subgraph 를 사용한다. 특별히 서브그래프의 이름이 **cluster** 로 시작하면 서브그래프를 감싸는 상자를 그려준다.
+
+```
+digraph {
+    subgraph clst_1 {
+        A -> B -> C;
+        subgraph clst_2 {
+            C -> D;
+            clst_1 -> D;
+        }
+    }
+    subgraph cluster_1 {
+        a -> b -> c;
+        subgraph cluster_2 {
+            c -> d;
+            cluster_1 -> d;
+        }
+    }
+}
+```
+~~~ {.dot}
+digraph {
+    subgraph clst_1 {
+        A -> B -> C;
+        subgraph clst_2 {
+            C -> D;
+        }
+    }
+    subgraph cluster_1 {
+        a -> b -> c;
+        subgraph cluster_2 {
+            c -> d;
+        }
+    }
+}
+~~~
+
+`compound=true` 를 주고 *lhead*(화살표가 향하는 곳), *ltail*(화살표가 나오는 곳) 속성을 주면 엣지의 연결부를 노드가 아니라 클러스터 경계에 닿도록 할 수 있다.
+
+```
+digraph {
+    compound=true;
+    subgraph clst_1 {
+        A -> B -> C;
+        subgraph clst_2 {
+            D;
+        }
+        C -> D [lhead=clst_2];
+    }
+    subgraph cluster_1 {
+        a -> b -> c;
+        subgraph cluster_2 {
+            d;
+        }
+        c -> d [lhead=cluster_2];
+    }
+    e -> a;
+    f -> a [lhead=cluster_1];
+    b -> g [ltail=cluster_1];
+    d -> h [ltail=cluster_2];
+
+}
+```
+~~~ {.dot}
+digraph {
+    compound=true;
+    subgraph clst_1 {
+        A -> B -> C;
+        subgraph clst_2 {
+            D;
+        }
+        C -> D [lhead=clst_2];
+    }
+    subgraph cluster_1 {
+        a -> b -> c;
+        subgraph cluster_2 {
+            d;
+        }
+        c -> d [lhead=cluster_2];
+    }
+    e -> a;
+    f -> a [lhead=cluster_1];
+    b -> g [ltail=cluster_1];
+    d -> h [ltail=cluster_2];
+
+}
+~~~
+
+## Direction
+
+그래프의 방향을 바꾸고 싶다: 제일 위에 `rankdir=LR` 을 넣는다.
+```
+graph {
+    rankdir=LR;
+    A -- B -- C -- D;
+}
+```
+~~~ {.dot}
+graph {
+    rankdir=LR;
+    A -- B -- C -- D;
+}
+~~~
