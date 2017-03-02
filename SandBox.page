@@ -1,10 +1,6 @@
-digraph {
-    // Line comment
-    A -> B;
-    /*
-    You will not see these two edges.
-    B -> C;
-    C -> D;
-    */
-    B -> E;
+~~~ {.dot}
+digraph TestGraph2 {
+    A -> B -> C;
+    C -> D -> A;
 }
+~~~
