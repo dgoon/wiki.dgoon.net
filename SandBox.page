@@ -1,0 +1,10 @@
+digraph {
+    // Line comment
+    A -> B;
+    /*
+    You will not see these two edges.
+    B -> C;
+    C -> D;
+    */
+    B -> E;
+}
